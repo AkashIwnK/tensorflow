@@ -173,3 +173,24 @@ Learn more about the
 ## License
 
 [Apache License 2.0](LICENSE)
+
+
+## Install Instructions for personal reference
+```
+   docker pull tensorflow/tensorflow:devel-py3
+
+   docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
+
+   cd /tensorflow_src/
+   git pull
+   git checkout r2.10
+
+   pip3 install six numpy wheel
+   pip3 install keras_applications==1.0.6 --no-deps
+   pip3 install keras_preprocessing==1.0.5 --no-deps
+
+   ./configure
+
+   bazel build --copt=-march=skylake tensorflow
+```
+
