@@ -173,3 +173,37 @@ Learn more about the
 ## License
 
 [Apache License 2.0](LICENSE)
+
+## Install Instructions for personal reference
+```
+   docker pull tensorflow/tensorflow:devel-py3
+
+   docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
+
+   cd /tensorflow_src/
+   git pull
+   git checkout r2.15
+
+   pip3 install six numpy wheel
+   pip3 install keras_applications==1.0.6 --no-deps
+   pip3 install keras_preprocessing==1.0.5 --no-deps
+
+   export TF_PYTHON_VERSION=3.9
+
+   ./configure
+
+   bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions --config=opt tensorflow
+   bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
+
+   ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+
+   wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
+   tar -xf Python-3.9.0.tar.xz
+   cd Python-3.9.0
+   ./configure --enable-optimizations
+   sudo make altinstall
+
+   python3.9 --use-feature=2020-resolver -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl
+   python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --force-reinstall
+
+```
