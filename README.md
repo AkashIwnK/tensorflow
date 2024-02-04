@@ -188,6 +188,19 @@ Learn more about the
    pip3 install keras_applications==1.0.6 --no-deps
    pip3 install keras_preprocessing==1.0.5 --no-deps
 
+   wget https://github.com/Kitware/CMake/releases/download/v3.28.2/cmake-3.28.2-linux-x86_64.sh
+   bash cmake-3.28.2-linux-x86_64.sh
+   export PATH=/tensorflow_src/cmake-3.28.2-linux-x86_64/bin/:$PATH
+
+   git clone https://github.com/llvm/llvm-project.git
+   git checkout release/17.x
+   cp clang llvm/tools -r
+   mkdir build
+   cd build
+   cmake ../llvm -DCMAKE_BUILD_TYPE="Release" -DLLVM_TARGETS_TO_BUILD="X86"
+   make -j32
+   cd ..
+
    export TF_PYTHON_VERSION=3.9
 
    ./configure
