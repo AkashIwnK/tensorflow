@@ -199,7 +199,8 @@ mkdir build
 cd build
 cmake ../llvm -DCMAKE_BUILD_TYPE="Release" -DLLVM_TARGETS_TO_BUILD="X86"
 make -j32
-cd ..
+export PATH=/tensorflow_src/llvm-project/build/bin:$PATH
+cd ../..
 
 export TF_PYTHON_VERSION=3.9
 
