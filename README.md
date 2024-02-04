@@ -176,47 +176,47 @@ Learn more about the
 
 ## Install Instructions for personal reference
 ```
-   docker pull tensorflow/tensorflow:devel-py3
+docker pull tensorflow/tensorflow:devel-py3
 
-   docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
+docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
 
-   cd /tensorflow_src/
-   git pull
-   git checkout r2.15
+cd /tensorflow_src/
+git pull
+git checkout r2.15
 
-   pip3 install six numpy wheel
-   pip3 install keras_applications==1.0.6 --no-deps
-   pip3 install keras_preprocessing==1.0.5 --no-deps
+pip3 install six numpy wheel
+pip3 install keras_applications==1.0.6 --no-deps
+pip3 install keras_preprocessing==1.0.5 --no-deps
 
-   wget https://github.com/Kitware/CMake/releases/download/v3.28.2/cmake-3.28.2-linux-x86_64.sh
-   bash cmake-3.28.2-linux-x86_64.sh
-   export PATH=/tensorflow_src/cmake-3.28.2-linux-x86_64/bin/:$PATH
+wget https://github.com/Kitware/CMake/releases/download/v3.28.2/cmake-3.28.2-linux-x86_64.sh
+bash cmake-3.28.2-linux-x86_64.sh
+export PATH=/tensorflow_src/cmake-3.28.2-linux-x86_64/bin/:$PATH
 
-   git clone https://github.com/llvm/llvm-project.git
-   git checkout release/17.x
-   cp clang llvm/tools -r
-   mkdir build
-   cd build
-   cmake ../llvm -DCMAKE_BUILD_TYPE="Release" -DLLVM_TARGETS_TO_BUILD="X86"
-   make -j32
-   cd ..
+git clone https://github.com/llvm/llvm-project.git
+git checkout release/17.x
+cp clang llvm/tools -r
+mkdir build
+cd build
+cmake ../llvm -DCMAKE_BUILD_TYPE="Release" -DLLVM_TARGETS_TO_BUILD="X86"
+make -j32
+cd ..
 
-   export TF_PYTHON_VERSION=3.9
+export TF_PYTHON_VERSION=3.9
 
-   ./configure
+./configure
 
-   bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions --config=opt tensorflow
-   bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
+bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions --config=opt tensorflow
+bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
 
-   ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 
-   wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
-   tar -xf Python-3.9.0.tar.xz
-   cd Python-3.9.0
-   ./configure --enable-optimizations
-   sudo make altinstall
+wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
+tar -xf Python-3.9.0.tar.xz
+cd Python-3.9.0
+./configure --enable-optimizations
+sudo make altinstall
 
-   python3.9 --use-feature=2020-resolver -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl
-   python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --force-reinstall
+python3.9 --use-feature=2020-resolver -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl
+python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --force-reinstall
 
 ```
