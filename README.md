@@ -213,6 +213,8 @@ bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=o
 pip install patchelf
 ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 
+sudo apt update
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
 tar -xf Python-3.9.0.tar.xz
 cd Python-3.9.0
