@@ -193,6 +193,7 @@ bash cmake-3.28.2-linux-x86_64.sh
 export PATH=/tensorflow_src/cmake-3.28.2-linux-x86_64/bin/:$PATH
 
 git clone https://github.com/llvm/llvm-project.git
+cd llvm-project
 git checkout release/17.x
 cp clang llvm/tools -r
 mkdir build
