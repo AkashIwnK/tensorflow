@@ -210,6 +210,7 @@ export TF_PYTHON_VERSION=3.9
 bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions --config=opt tensorflow
 bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
 
+pip install patchelf
 ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 
 wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
