@@ -207,7 +207,6 @@ export TF_PYTHON_VERSION=3.9
 
 ./configure
 
-bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions --config=opt tensorflow
 bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
 
 pip install patchelf
@@ -221,7 +220,6 @@ cd Python-3.9.0
 ./configure --enable-optimizations
 sudo make altinstall
 
-python3.9 --use-feature=2020-resolver -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl
-python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --force-reinstall
+python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --use-feature=2020-resolver
 
 ```
