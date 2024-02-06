@@ -175,22 +175,55 @@ Learn more about the
 [Apache License 2.0](LICENSE)
 
 
-## Install Instructions for personal reference
+## Instructions to install it on Miranda
 ```
-   docker pull tensorflow/tensorflow:devel-py3
+docker pull tensorflow/tensorflow:devel-py3
 
-   docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
+docker run -it -w /tensorflow -v /:/share tensorflow/tensorflow:devel-py3 bash
 
-   cd /tensorflow_src/
-   git pull
-   git checkout r2.10
+cd /tensorflow_src/
+git pull
+git checkout r2.15
 
-   pip3 install six numpy wheel
-   pip3 install keras_applications==1.0.6 --no-deps
-   pip3 install keras_preprocessing==1.0.5 --no-deps
+pip3 install six numpy wheel
+pip3 install keras_applications==1.0.6 --no-deps
+pip3 install keras_preprocessing==1.0.5 --no-deps
 
-   ./configure
+wget https://github.com/Kitware/CMake/releases/download/v3.28.2/cmake-3.28.2-linux-x86_64.sh
+bash cmake-3.28.2-linux-x86_64.sh
+export PATH=/tensorflow_src/cmake-3.28.2-linux-x86_64/bin/:$PATH
 
-   bazel build --copt=-march=skylake tensorflow
+git clone https://github.com/llvm/llvm-project.git
+cd llvm-project
+git checkout release/17.x
+cp clang llvm/tools -r
+mkdir build
+cd build
+cmake ../llvm -DCMAKE_BUILD_TYPE="Release" -DLLVM_TARGETS_TO_BUILD="X86"
+make -j32
+export PATH=/tensorflow_src/llvm-project/build/bin:$PATH
+cd ../..
+
+export TF_PYTHON_VERSION=3.9
+
+./configure
+
+bazel build --copt=-march=native --copt=-Wno-gnu-offsetof-extensions  --config=opt //tensorflow/tools/pip_package:build_pip_package
+
+pip install patchelf
+./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+
+sudo apt update
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz
+tar -xf Python-3.9.0.tar.xz
+cd Python-3.9.0
+./configure --enable-optimizations
+sudo make altinstall
+
+python3.9 -m pip install /tmp/tensorflow_pkg/tensorflow-2.15.0.post1-cp39-cp39-linux_x86_64.whl --use-feature=2020-resolver
+
 ```
+
+
 
